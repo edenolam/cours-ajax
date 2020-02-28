@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -111,7 +112,18 @@ class Post
                 $like->setPost(null);
             }
         }
-
         return $this;
+    }
+
+    /**
+     * Permet de savoir si cet article est liké par cet utilisateur
+     * @param \App\Entity\User $user
+     * @return bool
+     */
+    public function isLikedByUser(User $user) : bool {
+        foreach ($this->likes as $like){
+            if ($like->getUser() === $user) return true;
+        }
+        return false;
     }
 }
